@@ -2,13 +2,15 @@ import * as model from './model';
 import recipeView from './views/recipeView';
 import searchView from './views/searchView';
 import resultsView from './views/resultsView';
+import PaginationView from './views/paginationView';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import paginationView from './views/paginationView';
 
-if(module.hot) {
-  module.hot.accept();
-};
+// if(module.hot) {
+//   module.hot.accept();
+// };
 
 const controlRecipe = async function() {
   try {
@@ -34,21 +36,28 @@ const controlSearchResults = async () => {
     // Get search query
     const query = searchView.getQuery();
     if(!query) return;
-    
+
+    // Load search results
     await model.loadSearchResults(query);
+
+    // Render the limited number of results
     resultsView.render(model.getSearchResultPage());
 
-    // 
+    // Render the initial paginatin buttons
+    paginationView.render(model.state.search);
   } catch(err) {
     console.log(err);
   }
-}
+};
 
 const init = () => {
   recipeView.addHandlerRender(controlRecipe);
   searchView.addHandlerSearch(controlSearchResults);
+
   // render fake data
-  resultsView.render(model.getSearchResultPage(3));
+  resultsView.render(model.getSearchResultPage(2));
+  // Render the initial paginatin buttons
+  paginationView.render(model.state.search);
 };
 
 init();
