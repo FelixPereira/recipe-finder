@@ -56,9 +56,9 @@ export const getSearchResultPage = (page = state.search.page) => {
   state.search.page = page;
 
   // FAKE DATA
-  state.search.results = DATA;
+  // state.search.results = DATA;
 
-  const start = (page -1) * state.search.resultsPerPage;
+  const start = (page - 1) * state.search.resultsPerPage;
   const end = page * state.search.resultsPerPage;
 
   return state.search.results.slice(start, end);

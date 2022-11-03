@@ -41,7 +41,7 @@ const controlSearchResults = async () => {
     await model.loadSearchResults(query);
 
     // Render the limited number of results
-    resultsView.render(model.getSearchResultPage());
+    resultsView.render(model.getSearchResultPage(model.state.search.page));
 
     // Render the initial paginatin buttons
     paginationView.render(model.state.search);
@@ -50,14 +50,21 @@ const controlSearchResults = async () => {
   }
 };
 
+const controlPagination = (pageToGo) => {
+  resultsView.render(model.getSearchResultPage(pageToGo));
+  paginationView.render(model.state.search);
+};
+
+
 const init = () => {
   recipeView.addHandlerRender(controlRecipe);
   searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 
-  // render fake data
-  resultsView.render(model.getSearchResultPage(2));
-  // Render the initial paginatin buttons
-  paginationView.render(model.state.search);
+  // // render fake data
+  // resultsView.render(model.getSearchResultPage(model.state.search.page));
+  // // Render the initial paginatin buttons
+  // paginationView.render(model.state.search);
 };
 
 init();
