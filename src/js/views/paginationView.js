@@ -23,7 +23,7 @@ class PaginationView extends View {
     // Page 1, and there are other pages
     if(currentPage === 1 && numberOfPages > 1) {
       return `
-        <button data-pageToGo="${currentPage + 1}" class="btn--inline pagination__btn--next">
+        <button data-pagetogo="${currentPage + 1}" class="btn--inline pagination__btn--next">
           <span>Page ${currentPage + 1}</span>
           <svg class="search__icon">
             <use href="${icons}#icon-arrow-right"></use>
@@ -35,7 +35,7 @@ class PaginationView extends View {
     // Last page
     if(currentPage === numberOfPages && numberOfPages > 1) {
       return `
-        <button data-pageToGo="${currentPage - 1}" class="btn--inline pagination__btn--prev">
+        <button data-pagetogo="${currentPage - 1}" class="btn--inline pagination__btn--prev">
           <svg class="search__icon">
             <use href="${icons}#icon-arrow-left"></use>
           </svg>

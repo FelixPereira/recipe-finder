@@ -4,13 +4,23 @@ import icons from 'url:../../img/icons.svg';
 import {Fraction} from 'fractional';
 
 class RecipeView extends View {
-
   _parentElement = document.querySelector('.recipe');
   _errorMessage = 'We could not find a recipe. Please try again.';
   _message = '';
   
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(event => window.addEventListener(event, handler));
+  }
+
+  addHandlerUpdateServings(handler) {
+    this._parentElement.addEventListener('click', (event) => {
+      const btn = event.target.closest('.btn--update-servings');
+      if(!btn) return;
+
+      const newServings = +btn.dataset.servings;
+      if(newServings === 0) return;
+      handler(newServings);
+    });
   }
   
   _generateMarkup() {
@@ -38,12 +48,12 @@ class RecipeView extends View {
           <span class="recipe__info-text">servings</span>
 
           <div class="recipe__info-buttons">
-            <button class="btn--tiny btn--increase-servings">
+            <button data-servings="${this._data.servings - 1}" class="btn--tiny btn--update-servings">
               <svg>
                 <use href="${icons}#icon-minus-circle"></use>
               </svg>
             </button>
-            <button class="btn--tiny btn--increase-servings">
+            <button data-servings="${this._data.servings + 1}" class="btn--tiny btn--update-servings">
               <svg>
                 <use href="${icons}#icon-plus-circle"></use>
               </svg>

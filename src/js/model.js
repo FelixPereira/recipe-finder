@@ -54,7 +54,7 @@ export const loadSearchResults = async function(query) {
 const DATA = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,232,24,25,26,27,28,29,30,31];
 export const getSearchResultPage = (page = state.search.page) => {
   state.search.page = page;
-
+ 
   // FAKE DATA
   // state.search.results = DATA;
 
@@ -62,4 +62,12 @@ export const getSearchResultPage = (page = state.search.page) => {
   const end = page * state.search.resultsPerPage;
 
   return state.search.results.slice(start, end);
-}
+};
+
+export const updateServings = (newServings) => {
+  state.recipe.ingredients.forEach(ingredient => {
+    ingredient.quantity = ingredient.quantity * newServings / state.recipe.servings;
+  });
+
+  state.recipe.servings = newServings;
+};
