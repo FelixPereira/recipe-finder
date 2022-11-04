@@ -28,7 +28,7 @@ export default class View {
 
       // Update changed text
       if(!newElement.isEqualNode(currentElement) 
-        && newElement.firstChild.nodeValue.trim() !== '') {
+        && newElement.firstChild?.nodeValue.trim() !== '') {
         currentElement.textContent = newElement.textContent;
       }
       

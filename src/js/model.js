@@ -1,10 +1,12 @@
 import { async } from "regenerator-runtime"
+import { sassFalse } from "sass";
 import { API_URL } from "./config";
 import { RES_PER_PAGE } from "./config";
 import { getJSON } from "./helpers";
 
 export const state = {
   recipe: {},
+  bookmarks: [],
   search: {
     query: '',
     results: [],
@@ -27,6 +29,11 @@ export const loadRecipe = async function(id) {
       cookingTime: recipe.cooking_time,
       ingredients: recipe.ingredients
     }
+    if(state.bookmarks.some(bookmark => bookmark.id === recipe.id)) {
+      state.recipe.bookmarked = true;
+    } else {
+      state.recipe.bookmarked = false;
+    }
   } catch(err) {
     throw err;
   }
@@ -45,6 +52,7 @@ export const loadSearchResults = async function(query) {
         image: recipe.image_url,
       }
     });
+    state.search.page = 1;
   } catch(err) {
     throw err;
   }
@@ -71,3 +79,20 @@ export const updateServings = (newServings) => {
 
   state.recipe.servings = newServings;
 };
+
+export const addBookmark = (recipe) => {
+   
+  // Add bookmark
+  state.bookmarks.push(recipe);
+  console.log(state.bookmarks)
+  
+  // Mark current recipe as bookmarked
+  if(recipe.id === state.recipe.id) state.recipe.bookmarked = true; 
+};
+
+export const removeBookmark = (id) => {
+  const index = state.bookmarks.findIndex(bookmark => bookmark.id === id);
+  state.bookmarks.splice(index, 1);
+  if(id === state.recipe.id) state.recipe.bookmarked = false; 
+  console.log(state.bookmarks)
+}
