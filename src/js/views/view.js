@@ -15,9 +15,6 @@ export default class View {
   }
 
   update(data) {
-    if(!data || (Array.isArray(data) && data.length === 0)) 
-    return this.renderError(); 
-
     this._data = data;
 
     const newMarkup = this._generateMarkup();
@@ -28,15 +25,19 @@ export default class View {
 
     newElements.forEach((newElement, index) => {
       const currentElement = currentElements[index];
-      console.log(currentElement, newElement.isEqualNode(currentElement));
 
-      if(!newElement.isEqualNode(currentElement) && newElement.firstChild.nodeValue.trim() !== '') {
+      // Update changed text
+      if(!newElement.isEqualNode(currentElement) 
+        && newElement.firstChild.nodeValue.trim() !== '') {
         currentElement.textContent = newElement.textContent;
       }
+      
+      // Update changed attribute
+      if(!newElement.isEqualNode(currentElement)) {
+        Array.from(newElement.attributes)
+        .forEach(attribute => currentElement.setAttribute(attribute.name, attribute.value));
+      }
     });
-
-    // console.log(currentElements);
-    // console.log(newElements);
   }
 
   _clearParentElement() {
