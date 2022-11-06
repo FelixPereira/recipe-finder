@@ -89,6 +89,9 @@ const controlBookmarks = () => {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlAddRecipe = (newRecipe) => {
+  console.log(newRecipe);
+}
 
 const init = () => {
   bookmarksView.addHandlerRender(controlBookmarks);
@@ -97,6 +100,7 @@ const init = () => {
   recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  addRecipeView.addHandlerUpload(controlAddRecipe); 
 
 
   // // render fake data
