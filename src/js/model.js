@@ -13,7 +13,7 @@ export const state = {
     resultsPerPage: RES_PER_PAGE,
     page: 1,
   }
-}
+};
 
 export const loadRecipe = async function(id) {
   try {
@@ -80,19 +80,36 @@ export const updateServings = (newServings) => {
   state.recipe.servings = newServings;
 };
 
+const persistBookmarks = () => {
+  localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
+};
+
 export const addBookmark = (recipe) => {
    
   // Add bookmark
   state.bookmarks.push(recipe);
-  console.log(state.bookmarks);
   
   // Mark current recipe as bookmarked
   if(recipe.id === state.recipe.id) state.recipe.bookmarked = true; 
+
+  persistBookmarks();
 };
 
 export const removeBookmark = (id) => {
   const index = state.bookmarks.findIndex(bookmark => bookmark.id === id);
   state.bookmarks.splice(index, 1);
+
+  localStorage('bookmarks', state.bookmarks);
   if(id === state.recipe.id) state.recipe.bookmarked = false; 
-  console.log(state.bookmarks);
-}
+
+  persistBookmarks();
+};
+
+const init = () => {
+ const storage = localStorage.getItem('bookmarks');
+ if(!storage) return;
+
+ state.bookmarks = JSON.parse(storage);
+};
+
+init();
