@@ -2,12 +2,12 @@ import * as model from './model';
 import recipeView from './views/recipeView';
 import searchView from './views/searchView';
 import resultsView from './views/resultsView';
-import PaginationView from './views/paginationView';
 import bookmarksView from './views/bookmarksView';
+import paginationView from './views/paginationView';
+import addRecipeView from './views/addRecipeView';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import paginationView from './views/paginationView';
 
 // if(module.hot) {
 //   module.hot.accept();
