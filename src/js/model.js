@@ -39,24 +39,24 @@ export const loadRecipe = async function(id) {
   }
 };
 
-export const loadSearchResults = async function(query) {
-  try {
-    state.search.query = query;
-    const {data} = await getJSON(`${API_URL}?search=${query}`);
+// export const loadSearchResults = async function(query) {
+//   try {
+//     state.search.query = query;
+//     const {data} = await getJSON(`${API_URL}?search=${query}`);
 
-    state.search.results  = data.recipes.map(recipe => {
-      return {
-        id: recipe.id,
-        title: recipe.title,
-        publisher: recipe.publisher,
-        image: recipe.image_url,
-      }
-    });
-    state.search.page = 1;
-  } catch(err) {
-    throw err;
-  }
-};
+//     state.search.results  = data.recipes.map(recipe => {
+//       return {
+//         id: recipe.id,
+//         title: recipe.title,
+//         publisher: recipe.publisher,
+//         image: recipe.image_url,
+//       }
+//     });
+//     state.search.page = 1;
+//   } catch(err) {
+//     throw err;
+//   }
+// };
 
 // FAKE DATA
 const DATA = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,232,24,25,26,27,28,29,30,31];
@@ -64,7 +64,7 @@ export const getSearchResultPage = (page = state.search.page) => {
   state.search.page = page;
  
   // FAKE DATA
-  // state.search.results = DATA;
+  state.search.results = DATA;
 
   const start = (page - 1) * state.search.resultsPerPage;
   const end = page * state.search.resultsPerPage;
@@ -84,7 +84,7 @@ export const addBookmark = (recipe) => {
    
   // Add bookmark
   state.bookmarks.push(recipe);
-  console.log(state.bookmarks)
+  console.log(state.bookmarks);
   
   // Mark current recipe as bookmarked
   if(recipe.id === state.recipe.id) state.recipe.bookmarked = true; 
@@ -94,5 +94,5 @@ export const removeBookmark = (id) => {
   const index = state.bookmarks.findIndex(bookmark => bookmark.id === id);
   state.bookmarks.splice(index, 1);
   if(id === state.recipe.id) state.recipe.bookmarked = false; 
-  console.log(state.bookmarks)
+  console.log(state.bookmarks);
 }

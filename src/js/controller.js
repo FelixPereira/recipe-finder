@@ -3,6 +3,7 @@ import recipeView from './views/recipeView';
 import searchView from './views/searchView';
 import resultsView from './views/resultsView';
 import PaginationView from './views/paginationView';
+import bookmarksView from './views/bookmarksView';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -19,7 +20,8 @@ const controlRecipe = async function() {
     recipeView.renderSpinner();
 
     // Update results view to mark selected recipe
-    resultsView.update(model.getSearchResultPage())
+    resultsView.update(model.getSearchResultPage());
+    bookmarksView.update(model.state.bookmarks);
     
     // Loading recipe 
     await model.loadRecipe(id);
@@ -69,14 +71,18 @@ const controlServings = (newServings) => {
 };
 
 const controlAddBookmark = () => {
+  // Add/remove bookmarks
   if(!model.state.recipe.bookmarked) {
     model.addBookmark(model.state.recipe);
   } else {
     model.removeBookmark(model.state.recipe.id);
   }
   
-  // Render recipe
+  // Update recipe view
   recipeView.update(model.state.recipe);
+
+  // Render bookmarks
+  bookmarksView.render(model.state.bookmarks);
 };
 
 
@@ -89,9 +95,9 @@ const init = () => {
 
 
   // // render fake data
-  // resultsView.render(model.getSearchResultPage(model.state.search.page));
+  resultsView.render(model.getSearchResultPage(model.state.search.page));
   // // Render the initial paginatin buttons
-  // paginationView.render(model.state.search);
+  paginationView.render(model.state.search);
 };
 
 init();
