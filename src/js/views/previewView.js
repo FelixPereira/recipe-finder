@@ -1,7 +1,8 @@
 import View from './view';
 import icons from 'url:../../img/icons.svg';
 
-class previewView extends View {
+class PreviewView extends View {
+  _parentElement = '';
   _generateMarkup() {
     const id = window.location.hash.slice(1);
 
@@ -26,4 +27,4 @@ class previewView extends View {
   }
 };
 
-export default new previewView();
+export default new PreviewView();

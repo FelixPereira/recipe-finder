@@ -13,11 +13,11 @@ class SearchView {
     this._parentElement.querySelector('.search__field').value = '';
   }
 
-  addHandlerSearch(handlerControlerSearch) {
+  addHandlerSearch(handle) {
     this._parentElement.addEventListener('submit', (event) => {
       event.preventDefault();
 
-      handlerControlerSearch();
+      handle();
     });
   }
 };

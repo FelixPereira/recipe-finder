@@ -89,9 +89,14 @@ const controlBookmarks = () => {
   bookmarksView.render(model.state.bookmarks);
 };
 
-const controlAddRecipe = (newRecipe) => {
-  console.log(newRecipe);
-}
+const controlAddRecipe = async (newRecipe) => {
+  try {
+    await model.uploadRecipe(newRecipe);
+  } catch(err) {
+    console.log(err.message);
+    addRecipeView.renderError(err.message);
+  }
+};
 
 const init = () => {
   bookmarksView.addHandlerRender(controlBookmarks);
@@ -104,9 +109,9 @@ const init = () => {
 
 
   // // render fake data
-  resultsView.render(model.getSearchResultPage(model.state.search.page));
+  // resultsView.render(model.getSearchResultPage(model.state.search.page));
   // // Render the initial paginatin buttons
-  paginationView.render(model.state.search);
+  // paginationView.render(model.state.search);
 };
 
 init();
