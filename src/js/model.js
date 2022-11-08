@@ -53,7 +53,6 @@ export const loadSearchResults = async function(query) {
       }
     });
     state.search.page = 1;
-    console.log(state.search.results)
   } catch(err) {
     throw err;
   }
@@ -130,9 +129,7 @@ export const uploadRecipe = async (newRecipe) => {
       servings: +newRecipe.servings,
       ingredients
     };
-    const data = await sendJSON(`${API_URL}?key=${API_KEY}`, recipe);
-    console.log(data);
-    console.log(recipe);
+    await sendJSON(`${API_URL}?key=${API_KEY}`, recipe);
   } catch(err) {
     throw err;
   }
